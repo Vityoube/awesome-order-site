@@ -11,6 +11,7 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'n_F2y_1E2_GBiTSrquPhq5bX-Q4L_2G9',
+            'baseUrl'=>'/awesome-order-site',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -39,14 +40,16 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
         'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
+            'enablePrettyUrl' => true,	// включить ЧПУ
+            'showScriptName' => false,	// удалить скрипт (index.php) с url
             'rules' => [
+                [
+                    'pattern' => '/',	//	указывает какой контроллер и вид
+                    'route' => 'category/index',  	//	будет использоваться для
+                ],
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
