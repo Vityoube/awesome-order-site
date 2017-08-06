@@ -7,6 +7,6 @@
  */
 
 function debug($arr){
-    print_r($arr,true);
+    echo '<pre>'.print_r($arr,true).'</pre>';
 }
 ?>

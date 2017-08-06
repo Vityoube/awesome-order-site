@@ -16,9 +16,19 @@ use app\models\Restaurant;
  * @author vkalashnykov
  */
 class RestaurantController extends AppController{
+    public $relatedProducts;
     
     public function actionView($id){
         $restaurant= Restaurant::findOne($id);
+//        $relatedProducts=array();
+//        foreach($restaurant->products as $product){
+//            if (isset($product->relatedProducts)){
+//                foreach ($product->relatedProducts as $relatedProduct){
+//                    array_push($relatedProducts, $relatedProduct);
+//                }
+//            }
+//        }
+//        debug($relatedProducts);
         return $this->render('view', compact('restaurant'));
     }
 }

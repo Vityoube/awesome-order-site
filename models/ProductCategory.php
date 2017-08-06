@@ -5,25 +5,25 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "category".
+ * This is the model class for table "product_category".
  *
  * @property integer $id
+ * @property string $updated_at
+ * @property string $created_at
  * @property string $name
  * @property integer $status
- * @property string $created_at
- * @property string $updated_at
+ * @property string $description
  *
- * @property Restaurant[] $restaurants
+ * @property Product[] $products
  */
-class Category extends \yii\db\ActiveRecord
+class ProductCategory extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
-    
     public static function tableName()
     {
-        return 'category';
+        return 'product_category';
     }
 
     /**
@@ -32,11 +32,11 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'status'], 'required'],
+            [['updated_at', 'created_at'], 'safe'],
+            [['name', 'status', 'description'], 'required'],
             [['status'], 'integer'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['description'], 'string'],
             [['name'], 'string', 'max' => 50],
-            [['name'], 'unique'],
         ];
     }
 
@@ -47,18 +47,19 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'No',
+            'updated_at' => 'Updated',
+            'created_at' => 'Created',
             'name' => 'Name',
             'status' => 'Status',
-            'created_at' => 'Created',
-            'updated_at' => 'Updated',
+            'description' => 'Description',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRestaurants()
+    public function getProducts()
     {
-        return $this->hasMany(Restaurant::className(), ['category_id' => 'id']);
+        return $this->hasMany(Product::className(), ['product_category_id' => 'id']);
     }
 }

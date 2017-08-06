@@ -57,15 +57,15 @@ class Restaurant extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id' => 'No',
             'name' => 'Name',
             'content' => 'Content',
             'status' => 'Status',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'created_at' => 'Created',
+            'updated_at' => 'Updated',
             'keywords' => 'Keywords',
             'description' => 'Description',
-            'category_id' => 'Category ID',
+            'category_id' => 'Category',
         ];
     }
 
