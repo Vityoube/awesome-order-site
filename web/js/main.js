@@ -9,6 +9,7 @@ $('#category_menu').on('click','li',function (id) {
         type: 'get',
         success: function (res) {
             if (!res)alert('error!');
+//            console.log(res);
             $("#restaurant_block").html(res);
         },
         error: function () {

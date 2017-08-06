@@ -14,17 +14,17 @@ use app\models\Restaurant;
 use yii\web\View;
 
 class CategoryController extends AppController
-{
-
+{    
     public function actionIndex(){
-        $this->view->title="Home";
+        $this->view->title="Home";        
+        $categories=Category::find()->with('restaurants')->all();
         return $this->render('index',compact('categories'));
     }
 
     public function actionView($id){
         if (\Yii::$app->request->isAjax){
-            $restaurants=Restaurant::find()->with('category')->where(['category_id'=>$id])->all();
-            debug($restaurants);
+            $restaurants= Restaurant::find()->where(['category_id'=>$id])->all();
+            $this->layout=false;
             return $this->render('view',compact('restaurants'));
         }
 

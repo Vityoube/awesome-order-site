@@ -26,6 +26,8 @@ class Restaurant extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public $image;
+    
     public static function tableName()
     {
         return 'restaurant';
@@ -44,6 +46,7 @@ class Restaurant extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 100],
             [['keywords', 'description'], 'string', 'max' => 255],
             [['name'], 'unique'],
+            [['image'], 'file', 'extensions' => 'png, jpg, jpeg'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
         ];
     }
@@ -88,5 +91,14 @@ class Restaurant extends \yii\db\ActiveRecord
     public function getCategory()
     {
         return $this->hasOne(Category::className(), ['id' => 'category_id']);
+    }
+    
+    public function behaviors()
+    {
+        return [
+            'image' => [
+                'class' => 'rico\yii2images\behaviors\ImageBehave',
+            ]
+        ];
     }
 }
