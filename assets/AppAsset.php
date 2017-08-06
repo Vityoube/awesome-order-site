@@ -15,7 +15,8 @@ use yii\web\View;
  * @since 2.0
  */
 class AppAsset extends AssetBundle
-{
+{ sdfsdf
+    
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
