@@ -29,6 +29,9 @@ class Product extends \yii\db\ActiveRecord
      */
     
     public $isOrdered;
+    public $content='';
+    
+    public $qty=0;
     
     public static function tableName()
     {
@@ -67,6 +70,8 @@ class Product extends \yii\db\ActiveRecord
             'product_category_id' => 'Product Category',
             'status' => 'Status',
             'restaurant_id' => 'Restaurant',
+            'isOrdered'=> $this->name,
+            'qty'=>'Quantity'
         ];
     }
 

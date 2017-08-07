@@ -8,7 +8,10 @@
 
 namespace app\controllers;
 
+use app\components\ProductQuantityWidget;
+use app\models\Product;
 use app\models\Restaurant;
+use yii\widgets\ActiveForm;
 
 /**
  * Description of RestaurantController
@@ -16,19 +19,26 @@ use app\models\Restaurant;
  * @author vkalashnykov
  */
 class RestaurantController extends AppController{
-    public $relatedProducts;
+    
     
     public function actionView($id){
         $restaurant= Restaurant::findOne($id);
-//        $relatedProducts=array();
-//        foreach($restaurant->products as $product){
-//            if (isset($product->relatedProducts)){
-//                foreach ($product->relatedProducts as $relatedProduct){
-//                    array_push($relatedProducts, $relatedProduct);
-//                }
-//            }
-//        }
-//        debug($relatedProducts);
-        return $this->render('view', compact('restaurant'));
+        $products= Product::find()->where(['restaurant_id'=>$id])->andWhere(['parent_id'=>0])->all();
+        $j=1;
+        foreach ($products as $product){
+            $form= ActiveForm::begin(['id'=>'product-form-'.$j]);
+            if (isset($product->relatedProducts)){
+                foreach ($product->relatedProducts as $relatedProduct){
+                    $product->content.=$form->field($relatedProduct, 'isOrdered')->
+                            label($relatedProduct->name)->checkbox();
+                }
+            }
+            $product->content.='<br>'.$form->field($product, 'qty')->input('number',['step'=>1,'min'=>0,
+                'class'=>'pull-left','style'=>'width: 10%;']).
+                    '<button class="w3-button w3-circle w3-teal pull-right">+</button>';
+            ActiveForm::end();
+            $j++;
+       }
+        return $this->render('view', compact('restaurant','products'));
     }
 }
