@@ -45,9 +45,10 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             [['created_at', 'updated_at'], 'safe'],
-            [['name', 'product_category_id', 'restaurant_id'], 'required'],
+            [['name', 'product_category_id', 'restaurant_id','price'], 'required'],
             [['description'], 'string'],
             [['parent_id', 'product_category_id', 'status', 'restaurant_id'], 'integer'],
+            [['price'],'double'],
             [['name', 'keywords'], 'string', 'max' => 255],
             [['product_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => ProductCategory::className(), 'targetAttribute' => ['product_category_id' => 'id']],
             [['restaurant_id'], 'exist', 'skipOnError' => true, 'targetClass' => Restaurant::className(), 'targetAttribute' => ['restaurant_id' => 'id']],
@@ -71,7 +72,8 @@ class Product extends \yii\db\ActiveRecord
             'status' => 'Status',
             'restaurant_id' => 'Restaurant',
             'isOrdered'=> $this->name,
-            'qty'=>'Quantity'
+            'qty'=>'Quantity',
+            'price'=>'Price'
         ];
     }
 

@@ -18,3 +18,17 @@ $('#category_menu').on('click','li',function (id) {
     })
 
 });
+function orderProduct(id){
+    $.ajax({
+       url: 'cart/order',
+         data: {id: id},
+         type: 'post',
+         success: function (res) {
+             alert(res);
+         },
+         error: function(){
+             alert('Error');
+         }
+         
+    });
+}

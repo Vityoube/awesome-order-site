@@ -60,6 +60,9 @@ $config = [
                     'pattern' => '/',	//	указывает какой контроллер и вид
                     'route' => 'category/index',  	//	будет использоваться для
                 ],
+                'restaurant/<id:\d+>'=>'restaurant/view',
+                'category/<id:\d+>'=>'category/view',
+                'cart/order/<id:\d+>'=>'cart/order',
             ],
         ],
     ],
