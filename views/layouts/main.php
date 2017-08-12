@@ -8,6 +8,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\bootstrap\Alert;
 
 AppAsset::register($this);
 ?>
@@ -27,41 +28,56 @@ AppAsset::register($this);
 
 <div class="wrap">
 <?php
-//    NavBar::begin([
-//        'brandLabel' => 'Awesome order site',
-//        'brandUrl' => Yii::$app->homeUrl,
-//        'options' => [
-//            'class' => 'navbar-inverse navbar-fixed-top',
-//        ],
-//    ]);
-//    echo Nav::widget([
-//        'options' => ['class' => 'nav navbar-nav navbar-right'],
-//        'items' => [
-//            ['label' => 'Home', 'url' => ['category/index']],
-//            ['label' => 'Search', 'url' => ['/category/search']],
-//            ['label' => 'Cart'],
-//            Yii::$app->user->isGuest ? (
-//                ['label' => 'Login', 'url' => ['/site/login']]
-//            ) : (
-//                '<li>'
-//                . Html::beginForm(['/site/logout'], 'post')
-//                . Html::submitButton(
-//                    'Logout (' . Yii::$app->user->identity->username . ')',
-//                    ['class' => 'btn btn-link logout']
-//                )
-//                . Html::endForm()
-//                . '</li>'
-//            )
-//        ],
-//    ]);
-//    NavBar::end();
+    NavBar::begin([
+        'brandLabel' => 'Awesome order site',
+        'brandUrl' => Yii::$app->homeUrl,
+        'options' => [
+            'class' => 'navbar-inverse navbar-fixed-top',
+        ],
+    ]);
+    echo Nav::widget([
+        'options' => ['class' => 'nav navbar-nav navbar-right'],
+        'items' => [
+            ['label' => 'Home', 'url' => ['category/index'],],
+            ['label' => 'Search', 'url' => ['/category/search']],
+            ['label' => 'Cart','options'=>['id'=>'cart','class'=>'dropdown'] ],
+            Yii::$app->user->isGuest ? (
+                ['label' => 'Login', 'url' => ['/site/login']]
+            ) : (
+                '<li>'
+                . Html::beginForm(['/site/logout'], 'post')
+                . Html::submitButton(
+                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    ['class' => 'btn btn-link logout']
+                )
+                . Html::endForm()
+                . '</li>'
+            )
+        ],
+    ]);
+    NavBar::end();
     ?>
+    <?php // if (!empty(Yii::$app->session->getAllFlashes())): ?>
+    <?php // foreach (Yii::$app->session->getAllFlashes() as $flash): ?>
+    <?php // endforeach;?>
+    <?php // endif; ?>
+     <?php if(Yii::$app->session->hasFlash('success')): ?>
+    <?= Alert::widget([
+        'options'=>[
+            'class'=>'alert-info',
+        ],
+        'body'=> Yii::$app->session->getFlash('success'),
+    ]) ?>
+        <?php endif; ?>
     <div class="container">
-        <?php // echo Breadcrumbs::widget([
-//            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-//        ]) ?>
+        <?php echo Breadcrumbs::widget([
+            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+        ]) ?>
+       
         <?= $content ?>
     </div>
+    
+    
 </div>
 
 <footer class="footer ">

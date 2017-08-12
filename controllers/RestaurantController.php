@@ -24,26 +24,28 @@ class RestaurantController extends AppController{
     public function actionView($id){
         $restaurant= Restaurant::findOne($id);
         $products= Product::find()->where(['restaurant_id'=>$id])->andWhere(['parent_id'=>0])->all();
-        $j=1;
         foreach ($products as $product){
-            $form= ActiveForm::begin(['id'=>'product-form-'.$j]);
+            $form= ActiveForm::begin([]);
+            $relatedProductsId=array();
             if (isset($product->relatedProducts)){
                 $product->content='';
                 foreach ($product->relatedProducts as $relatedProduct){
-                    $product->content.=$form->field($relatedProduct, 'isOrdered')->
-                            label($relatedProduct->name)->checkbox();
+                    $product->content.='<input type="checkbox" '
+                            . 'id="related-product-'.$product->id.'-'.$relatedProduct->id.
+                            '" data-id="'.$relatedProduct->id.'">'.($relatedProduct->name).'</input><br>';
+                    array_push($relatedProductsId, $relatedProduct->id);
                 }
             }
-            $product->content.='<br>'.$form->field($product, 'qty')->input('number',['step'=>1,'min'=>0,
-                'class'=>'pull-left','style'=>'width: 10%;']).
+            $product->content.='<br><input type="number" id="qty'.$product->id.
+                    '" step="1" min="1" value="1" class="pull-left" style="width: 10%;"/>'.
                 Html::buttonInput('+',
                         ['class'=>'w3-button w3-circle w3-teal pull-right',
                             'data-id'=>$product->id,
-                            'onclick'=>'orderProduct('.$product->id.');']);
+                            'onclick'=>'addProduct('.$product->id.','.json_encode($relatedProductsId).','.$id.');']);
             ActiveForm::end();
-            $j++;
        }
-        return $this->render('view', compact('restaurant','products'));
+       $this->view->title=$restaurant->name;
+       return $this->render('view', compact('restaurant','products'));
     }
    
     
